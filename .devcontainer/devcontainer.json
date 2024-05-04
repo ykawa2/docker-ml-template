@@ -1,0 +1,33 @@
+{
+  "name": "docker-ml-template",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/home/docker",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "eamodio.gitlens",
+        "mhutchie.git-graph",
+        "ms-azuretools.vscode-docker",
+        "njpwerner.autodocstring",
+        "streetsidesoftware.code-spell-checker",
+        "formulahendry.code-runner",
+        "rogalmic.bash-debug",
+        "timonwong.shellcheck",
+        "foxundermoon.shell-format",
+        "ms-python.flake8",
+        "GitHub.copilot",
+        "ryanluker.vscode-coverage-gutters",
+        "usernamehw.errorlens",
+        "ms-python.black-formatter",
+        "ms-python.isort",
+        "ms-python.mypy-type-checker"
+      ],
+      "settings": {}
+    }
+  },
+  "postCreateCommand": "cd docker-ml-template && make setup; make install",
+  "shutdownAction": "none"
+}

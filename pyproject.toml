@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "docker-ml-template"
+version = "0.1.0"
+description = "Project template for docker-ml-template"
+authors = ["Anonymous <xxx@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+# Add your dependencies here
+python = "^3.8.1"
+
+[tool.poetry.group.dev.dependencies]
+# Add your dependencies here
+black = "^23.9.1"
+isort = "^5.12.0"
+flake8 = "^6.0.0"
+pytest-cov = "^4.1.0"
+mypy = "^1.5.1"
+pyproject-flake8 = "^6.0.0.post1"
+ipykernel = "^6.25.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+# Usable after installing the extension.
+python_version = 3.8
+disallow_untyped_defs = true
+disallow_untyped_calls = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+
+
+[tool.flake8]
+# Usable after installing the extension.
+# Need to set `Flake8: Path` with pflake8 to use pyproject.toml
+max-line-length = 119
+max-complexity = 10
+ignore = "E203,E402,W503,"
+
+
+[tool.black]
+# Usable after installing the extension and formatOnSave: true
+target-version = ['py38']
+line-length = 119
+
+
+[tool.isort]
+# Usable after installing the extension and editor.codeActionsOnSave: true
+profile = "black"
+line_length = 119
