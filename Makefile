@@ -1,4 +1,3 @@
-HOME=/home/docker
 PROJECT_DIR=/home/docker/docker-ml-template
 
 # devcontainer------------------------------------------------------------
