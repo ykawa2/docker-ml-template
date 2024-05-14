@@ -10,11 +10,12 @@ on:
 
 jobs:
   pytest:
-    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         python-version: ["3.8", "3.10"]
+        ubuntu-version: ["22.04"]
+    runs-on: ubuntu-${{ matrix.ubuntu-version }}
 
     steps:
       - name: Checkout
@@ -34,11 +35,11 @@ jobs:
 
       # - name: Lint with flake8
       #   run: |
-      #     # stop the build if there are Python syntax erorrs or undefined names
+      #     # stop the build if there are Python syntax errors or undefined names
       #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
       #     # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
       #     flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Test with pytest
         run: |
-          python -m pytest -v
+          python -m pytest -sv --cov=. --cov-report=xml --cov-report=term ./tests
