@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.8", "3.10"]
-        ubuntu-version: ["22.04"]
+        ubuntu-version: ["20.04", "22.04"]
     runs-on: ubuntu-${{ matrix.ubuntu-version }}
 
     steps:
