@@ -56,6 +56,7 @@
         "postprocess",
         "preds",
         "proto",
+        "pytest",
         "relu",
         "segmap",
         "segmaps",
