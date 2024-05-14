@@ -20,13 +20,32 @@ set-symlinks:
 setup: set-prompt set-symlinks
 	@echo "*** Setup completed."
 
+
 # installation------------------------------------------------------------
-.PHONY: install
-install:
+.PHONY: install-requirements
+install-requirements:
+	sudo apt-get update && sudo apt-get install -y libgl1-mesa-dev
 	pip install -r ${PROJECT_DIR}/requirements.txt
+
+.PHONY: install-mmcv
+install-mmcv:
+	pip install -U openmim && mim install mmengine && mim install mmcv==2.1.0
+
+.PHONY: install-mmlab
+install-mmlab:
+	cd ${HOME}/mmpretrain && mim install -v -e .
+# cd ${HOME}/mmsegmentation && pip install -v -e .
+# cd ${HOME}/mmdetection && pip install -v -e .
+
+.PHONY: install
+install: install-requirements install-mmcv install-mmlab
+	@echo "*** Installation completed."
 
 
 # train-------------------------------------------------------------------
+.PHONY: train
+train:
+	cd ${HOME}/${LIB}/tools && CUBLAS_WORKSPACE_CONFIG=:4096:8 python train.py ${CONFIG}
 
 
 # test--------------------------------------------------------------------

@@ -11,3 +11,6 @@ watchdog
 mypy
 ipykernel
 timm
+openmim
+yapf==0.33.0
+ftfy
