@@ -23,7 +23,8 @@
         "usernamehw.errorlens",
         "ms-python.black-formatter",
         "ms-python.isort",
-        "ms-python.mypy-type-checker"
+        "ms-python.mypy-type-checker",
+        "elazarcoh.simply-view-image-for-python-debugging"
       ],
       "settings": {}
     }
