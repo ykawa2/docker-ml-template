@@ -29,13 +29,21 @@ install-requirements:
 
 .PHONY: install-mmcv
 install-mmcv:
-	pip install -U openmim && mim install mmengine && mim install mmcv==2.1.0
+# MAX_JOBSを指定しないとnvcc error : 'cudafe++' died due to signal 9 (Kill signal)が発生する場合あり
+# export MAX_JOBS=12; pip install -U openmim && mim install mmengine && mim install mmcv==2.1.0
+# wheelファイルを取っておくと便利
+	pip install /home/docker/docker-ml-template/mmcv-2.1.0-cp310-cp310-linux_x86_64.whl
 
 .PHONY: install-mmlab
 install-mmlab:
+	cd ${HOME} && git clone -b v1.2.0 https://github.com/open-mmlab/mmpretrain.git
+	cd ${HOME} && git clone -b v3.3.0 https://github.com/open-mmlab/mmdetection.git
+	cd ${HOME} && git clone -b v1.2.2 https://github.com/open-mmlab/mmsegmentation.git
+	cd ${HOME} && git clone -b v1.3.1 https://github.com/open-mmlab/mmpose.git
 	cd ${HOME}/mmpretrain && mim install -v -e .
-# cd ${HOME}/mmsegmentation && pip install -v -e .
-# cd ${HOME}/mmdetection && pip install -v -e .
+	cd ${HOME}/mmsegmentation && pip install -v -e .
+	cd ${HOME}/mmdetection && pip install -v -e .
+	cd ${HOME}/mmpose && pip install -v -e .
 
 .PHONY: install
 install: install-requirements install-mmcv install-mmlab
@@ -56,3 +64,9 @@ pytest:
 .PHONY: cov
 cov:
 	pytest -sv --cov=src --cov-report=xml --cov-report=term ./tests
+
+
+# others-------------------------------------------------------------------
+.PHONY: check_gpu
+gpu:
+	python -c "import torch; print('CUDA available:', torch.cuda.is_available())"
