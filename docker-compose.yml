@@ -14,6 +14,7 @@ services:
       - ${HOME}/docker-ml-template:/home/docker/docker-ml-template
       - ${HOME}/Datasets:/home/docker/Datasets
       - ${HOME}/Models:/home/docker/Models
+      - ${HOME}/Outputs:/home/docker/Outputs
     tty: true
     stdin_open: true
     privileged: true

@@ -1,20 +1,33 @@
 #!/bin/bash
 
-# Added for displaying git branch in prompt
-function parse_git_branch {
-    local ret=
+# Function to parse git branch or tag
+function parse_git_ref {
+    local ref
+    ref=$(git symbolic-ref -q --short HEAD 2>/dev/null || git describe --tags --exact-match 2>/dev/null)
 
-    ret=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-
-    if [[ $? -ne 0 ]]; then
-        ret=''
-    elif [[ $ret = 'HEAD' ]]; then
-        ret="detached:$(git rev-parse --short HEAD)"
+    if [[ $? -ne 0 || $ref = '' ]]; then
+        if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+            ref="detached:$(git rev-parse --short HEAD)"
+        else
+            ref=''
+        fi
     fi
 
-    echo "$ret"
+    echo "$ref"
 }
 
+# Function to parse git user
+function parse_git_user {
+    local user
+    user=$(git config user.name 2>/dev/null)
+    if [[ $? -ne 0 ]]; then
+        user=''
+    fi
+
+    echo "$user"
+}
+
+# Set the bash prompt
 __bash_prompt() {
     local BLUE='\[\e[1;34m\]'
     local RED='\[\e[1;31m\]'
@@ -24,7 +37,7 @@ __bash_prompt() {
     local RMCOLOR='\[\033[0m\]'
 
     local BASE="\u@\h"
-    PS1="${GREEN}${BASE}${WHITE}:${BLUE}\w${GREEN} (\$(parse_git_branch))${WHITE}\$ "
+    PS1="${GREEN}${BASE}${WHITE}:${BLUE}\w${GREEN} (\$(parse_git_ref))(\$(parse_git_user))${WHITE}\$ "
 
     case "$TERM" in
     xterm* | rxvt*)
